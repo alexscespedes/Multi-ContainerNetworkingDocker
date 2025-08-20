@@ -1,0 +1,38 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "Fitness32_"
+      ACCEPT_EULA: "Y"
+    networks:
+      - backendnet
+
+  orders-api:
+    build: ./orders-api
+    container_name: orders-api
+    ports:
+      - 5001:80
+    environment:
+      ConnectionStrings_DefaultConnection: "Server=sqlserver;Database=OrdersDb;User=SA;Password=Fitness32_;TrustServerCertificate=True;"
+    depends_on:
+      - sqlserver
+    networks:
+      - backendnet
+
+  products-api:
+    build: ./products-api
+    container_name: products-api
+    ports:
+      - 5002:80
+    environment:
+      ConnectionStrings_DefaultConnection: "Server=sqlserver;Database=ProductsDb;User=SA;Password=Fitness32_;TrustServerCertificate=True;"
+    depends_on:
+      - sqlserver
+    networks:
+      - backendnet
+
+networks:
+  backendnet:
