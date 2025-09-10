@@ -7,11 +7,9 @@ services:
     environment:
       SA_PASSWORD: "Fitness32_"
       ACCEPT_EULA: "Y"
-    networks:
-      - backendnet
 
   orders-api:
-    build: ./orders-api
+    build: ./OrdersAPI
     container_name: orders-api
     ports:
       - 5001:8080
@@ -19,20 +17,6 @@ services:
       ConnectionStrings_DefaultConnection: "Server=sqlserver;Database=OrdersDb;User=SA;Password=Fitness32_;TrustServerCertificate=True;"
     depends_on:
       - sqlserver
-    networks:
-      - backendnet
-
-  products-api:
-    build: ./products-api
-    container_name: products-api
-    ports:
-      - 5002:8080
-    environment:
-      ConnectionStrings_DefaultConnection: "Server=sqlserver;Database=ProductsDb;User=SA;Password=Fitness32_;TrustServerCertificate=True;"
-    depends_on:
-      - sqlserver
-    networks:
-      - backendnet
 
 networks:
   backendnet:
