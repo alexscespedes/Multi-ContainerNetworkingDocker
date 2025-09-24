@@ -13,7 +13,7 @@ namespace OrdersAPI
 
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> Get() => await _context.Orders.ToListAsync();
+        public async Task<ActionResult<IEnumerable<Order>>> GetAll() => await _context.Orders.ToListAsync();
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Order>> Get(int id)
